@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>社会的スキル教育：みんなと仲良く（プロトタイプ）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: "Arial", sans-serif; background: #e0ffff; margin: 0; padding: 0; }
+        header { background: #00ced1; color: white; padding: 1em; text-align: center; font-size: 1.2em; }
+        .scenario-list { display: flex; flex-wrap: wrap; gap: 1em; justify-content: center; padding: 1em; }
+        .scenario-btn { padding: 0.5em 1em; background: #40e0d0; color: #333; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        .scenario-btn:hover { background: #20b2aa; }
+        #results { padding: 1em; display: flex; flex-direction: column; align-items: center; gap: 1em; }
+        .card { background: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 1em; width: 80%; max-width: 600px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0 0 0.5em; color: #00ced1; }
+        .card p { margin: 0 0 1em; }
+        .practice { margin-top: 1em; }
+        .practice select, .practice textarea { width: 100%; padding: 0.5em; margin-top: 0.5em; border: 1px solid #ccc; border-radius: 5px; }
+        .practice button { padding: 0.5em 1em; background: #00ced1; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 0.5em; }
+        @media (max-width: 600px) {
+            header { font-size: 1em; }
+            .card { width: 90%; }
+            .scenario-btn { font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+    <header>社会的スキル教育：みんなと仲良く（プロトタイプ）</header>
+    <div class="scenario-list">
+        <button class="scenario-btn" onclick="selectScenario('conflict')">シナリオ1: 意見の対立</button>
+        <button class="scenario-btn" onclick="selectScenario('cooperation')">シナリオ2: チームでの協力</button>
+        <button class="scenario-btn" onclick="selectScenario('communication')">シナリオ3: 気持ちを伝える</button>
+    </div>
+    <div id="results">
+        <div class="card">
+            <h3>ようこそ！</h3>
+            <p>シナリオを選んで、みんなと仲良くするためのスキルを学ぼう！シナリオを読んで、どうすればいいかを考えてみてね。</p>
+        </div>
+    </div>
+
+    <script>
+        function selectScenario(scenario) {
+            const results = document.getElementById("results");
+            let content = "";
+
+            if (scenario === "conflict") {
+                content = `
+                    <div class="card">
+                        <h3>シナリオ1: 意見の対立</h3>
+                        <p><strong>物語:</strong> クラスでグループ活動中、A君は「サッカーをしよう」と提案しました。でもB君は「バスケットボールがいい」と言い、2人は言い争いになりました。グループのみんなは困っています。</p>
+                        <p><strong>何が問題か:</strong> 意見が違うのは自然なことだけど、言い争うとみんなが楽しくなくなります。お互いの気持ちを理解し、解決策を見つけることが大切です。</p>
+                        <p><strong>視点の切り替え:</strong>
+                            - <strong>A君:</strong> サッカーが大好きだから、みんなにも楽しんでほしいと思っている。
+                            - <strong>B君:</strong> バスケットボールが得意だから、みんなでやりたいと思っている。
+                            - <strong>他の子:</strong> 2人の言い争いで、どうすればいいか分からない。
+                        </p>
+                        <div class="practice">
+                            <h3>あなたならどうする？</h3>
+                            <p>この状況で、どうやって解決しますか？考えてみましょう。</p>
+                            <select id="practiceChoice">
+                                <option value="">選択してください</option>
+                                <option value="compromise">「サッカーとバスケットボールを両方やろう」と提案する</option>
+                                <option value="listen">2人の意見を聞いて、みんなで決める</option>
+                                <option value="ignore">何もしない</option>
+                            </select>
+                            <textarea id="practiceText" placeholder="あなたの考えや気持ちを自由に書いてください（例: A君とB君の気持ちを考えると…）" rows="4"></textarea>
+                            <button onclick="submitPractice()">送信</button>
+                        </div>
+                    </div>`;
+            } else if (scenario === "cooperation") {
+                content = `
+                    <div class="card">
+                        <h3>シナリオ2: チームでの協力</h3>
+                        <p><strong>物語:</strong> 学校のイベントで、クラス全員で劇を作ることになりました。Cちゃんは「私が主役がいい」と言い、D君は「みんなで役割を決めよう」と提案しました。でも、Cちゃんは納得せず、チームがバラバラになってしまいました。</p>
+                        <p><strong>何が問題か:</strong> チームで協力するには、みんなが自分の役割を受け入れ、助け合うことが大切です。Cちゃんは自分の意見を押し通そうとして、チームの雰囲気を悪くしてしまいました。</p>
+                        <p><strong>視点の切り替え:</strong>
+                            - <strong>Cちゃん:</strong> 主役になりたい気持ちが強く、他の役割を考えられない。
+                            - <strong>D君:</strong> みんなが楽しめるように、公平に役割を決めたい。
+                            - <strong>他の子:</strong> チームがバラバラで、劇が進まないことに不安を感じる。
+                        </p>
+                        <div class="practice">
+                            <h3>あなたならどうする？</h3>
+                            <p>この状況で、どうやってチームをまとめますか？考えてみましょう。</p>
+                            <select id="practiceChoice">
+                                <option value="">選択してください</option>
+                                <option value="discuss">みんなで話し合って、役割を決める</option>
+                                <option value="encourage">Cちゃんに「他の役割も楽しいよ」と伝える</option>
+                                <option value="ignore">何もしない</option>
+                            </select>
+                            <textarea id="practiceText" placeholder="あなたの考えや気持ちを自由に書いてください（例: チームで協力するには…）" rows="4"></textarea>
+                            <button onclick="submitPractice()">送信</button>
+                        </div>
+                    </div>`;
+            } else if (scenario === "communication") {
+                content = `
+                    <div class="card">
+                        <h3>シナリオ3: 気持ちを伝える</h3>
+                        <p><strong>物語:</strong> E君は友達のF君に「いつも遅刻してくるから困る」と感じていました。でも、どうやって伝えたらいいか分からず、黙っていました。F君はE君が不機嫌なことに気づきませんでした。</p>
+                        <p><strong>何が問題か:</strong> 気持ちを伝えないと、相手には分からないことがあります。E君が我慢していると、ストレスがたまり、関係が悪くなるかもしれません。気持ちを素直に伝えることが大切です。</p>
+                        <p><strong>視点の切り替え:</strong>
+                            - <strong>E君:</strong> F君の遅刻にイライラしているけど、言いづらい。
+                            - <strong>F君:</strong> E君が不機嫌な理由が分からず、どうしていいか分からない。
+                            - <strong>他の子:</strong> 2人の雰囲気が悪くて、グループ全体がぎこちない。
+                        </p>
+                        <div class="practice">
+                            <h3>あなたならどうする？</h3>
+                            <p>この状況で、どうやって気持ちを伝えますか？考えてみましょう。</p>
+                            <select id="practiceChoice">
+                                <option value="">選択してください</option>
+                                <option value="talk">E君として「遅刻すると困るから、時間通りに来てほしい」と伝える</option>
+                                <option value="ask">F君として「何かあった？」と聞く</option>
+                                <option value="ignore">何もしない</option>
+                            </select>
+                            <textarea id="practiceText" placeholder="あなたの考えや気持ちを自由に書いてください（例: 気持ちを伝えるには…）" rows="4"></textarea>
+                            <button onclick="submitPractice()">送信</button>
+                        </div>
+                    </div>`;
+            }
+
+            results.innerHTML = content;
+        }
+
+        function submitPractice() {
+            const choice = document.getElementById("practiceChoice").value;
+            const text = document.getElementById("practiceText").value;
+            const results = document.getElementById("results");
+            let feedback = "ありがとう！あなたの考えを聞けて嬉しいよ。";
+
+            if (choice === "compromise" || choice === "listen" || choice === "discuss" || choice === "encourage" || choice === "talk" || choice === "ask") {
+                feedback += " 良い選択だね！社会的スキルを育てると、みんなと仲良くできるよ。";
+            } else if (choice === "ignore") {
+                feedback += " 何もしない選択も分かるけど、小さな行動が関係を良くすることもあるよ。次は一歩踏み出してみてね。";
+            }
+
+            if (text) {
+                feedback += ` あなたはこう考えたね：「${text}」 その気持ちを大切にして、これからも実践してみよう！`;
+            }
+
+            results.innerHTML += `<div class="card"><h3>あなたの気づき</h3><p>${feedback}</p></div>`;
+        }
+    </script>
+</body>
+</html>
